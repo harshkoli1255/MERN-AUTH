@@ -10,6 +10,7 @@ const Home = () => {
 
   const handleLogout = async () => {
     await logout();
+    toast.success("logout successfully");
   };
 
   const handleVerifyEmail = async () => {

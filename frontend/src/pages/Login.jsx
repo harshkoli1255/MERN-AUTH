@@ -4,6 +4,7 @@ import {Mail, Lock, Loader} from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import Input from "../components/Input";
 import { userAuthStore } from "../store/authStore";
+import toast from "react-hot-toast";
 
 
 const Login = () => {
@@ -14,6 +15,7 @@ const Login = () => {
     const handleLogin = async(e) => {
         e.preventDefault();
         await login(email, password);
+        toast.success("Login successfully");
         navigate("/");
     }
   return (

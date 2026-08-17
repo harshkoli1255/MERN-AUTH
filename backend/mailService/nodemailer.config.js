@@ -2,7 +2,7 @@ import nodemailer from 'nodemailer';
 const smtpConfig = {
   host: process.env.SMTP_SERVER,
   port: Number(process.env.SMTP_PORT),
-  secure: false,
+  secure: process.env.NODE_ENV == 'production',
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,

@@ -201,7 +201,11 @@ export const login = async (req, res) => {
     }
 }
 export const logout = async (req, res) => {
-    res.clearCookie("token");
+    res.clearCookie("token", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+    });
     res.status(200).json({
         success: true,
         message: "Logged out successfully",
@@ -272,6 +276,7 @@ export const resetPassword = async (req, res) => {
         user.password = hashedPassword;
         user.resetPasswordToken = undefined;
         user.resetPasswordExpiresAt = undefined;
+        generateTokenAndSetCookie(res, user._id),
         user.save();
         res.status(200).json({
             success: true,

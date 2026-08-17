@@ -23,8 +23,7 @@ const ResetPassword = () => {
             }, 2000)
         } else {
             toast.error("Password not match");
-        }
-        
+        } 
     }
 
     useEffect(() => {

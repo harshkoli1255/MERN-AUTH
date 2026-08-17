@@ -14,7 +14,7 @@ const ForgotPasswordPage = () => {
         e.preventDefault();
         await forgotPassword(email)
         setIsSubmitted(true);
-        toast.success("Reset link sent to your inbox...")
+        toast.success("Reset link sent to your index...")
     }
 
   return (

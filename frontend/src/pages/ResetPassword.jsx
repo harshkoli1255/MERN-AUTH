@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import Input from '../components/Input.jsx';
-import {Lock, Loader} from 'lucide-react';
+import {Lock, Loader, ArrowLeft} from 'lucide-react';
 import { userAuthStore } from '../store/authStore.js';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
@@ -61,6 +61,24 @@ const ResetPassword = () => {
 
             </form>
       </div>
+
+        <div className="border-t border-white/10 bg-gradient-to-r from-slate-950/60 via-indigo-950/30 to-slate-950/60 px-6 py-5">
+    <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-between">
+
+      <p className="text-sm text-slate-400">
+        Want to return home?
+      </p>
+
+      <Link
+        to="/"
+        className="group inline-flex items-center gap-2 rounded-lg border border-blue-400/20 bg-blue-400/10 px-4 py-2 text-sm font-semibold text-blue-200 shadow-sm shadow-blue-950/30 transition duration-200 hover:border-blue-300/40 hover:bg-blue-400/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-400/60 focus:ring-offset-2 focus:ring-offset-slate-950"
+      >
+        <ArrowLeft className="h-4 w-4 transition-transform duration-200 group-hover:-translate-x-1" />
+        <span>Back to Home</span>
+      </Link>
+
+    </div>
+  </div>
     </motion.div>
   )
 }

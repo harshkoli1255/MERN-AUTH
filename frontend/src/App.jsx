@@ -91,6 +91,10 @@ function App() {
               <ResetPassword/>
             </RedirectAuthenticatedUser>
           }/>
+          
+          <Route path="*" element={
+            <Navigate to="/" replace={true}/>
+          }/>
         </Routes>
       <Toaster/>
     </div>

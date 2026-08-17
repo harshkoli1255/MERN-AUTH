@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { userAuthStore } from '../store/authStore';
 import toast from 'react-hot-toast';
-import { Loader } from 'lucide-react';
+import { ArrowLeft, Loader } from 'lucide-react';
 
 const EmailVerification = () => {
     const [code, setCode] = useState(["", "", "", "", "", ""]);
@@ -68,46 +68,93 @@ const EmailVerification = () => {
         }
     };
 
-  return (
-    <motion.div className='p-8 max-w-md w-full bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl shadow-indigo-950/50 overflow-hidden'
-    initial={{opacity: 0, y : -50}} animate={{opacity: 1, y: 0}} transition={{duration: 0.4}} >
-        
+  return (  
 
-        <h2 className='text-3xl font-bold mb-6 text-center bg-gradient-to-r from-blue-400 to-indigo-500 text-transparent bg-clip-text'>
-            Verify Your Email
-        </h2>
-        <p className='text-center text-gray-300 mb-6 font-medium'>Enter the 6-digit code sent to your email address. {user && <span className='font-semibold text-amber-300'>{user.email}</span>}</p>
+  <motion.div
+  className="w-full max-w-md overflow-hidden rounded-2xl border border-white/10 bg-slate-900/80 shadow-2xl shadow-indigo-950/50 backdrop-blur-xl"
+  initial={{ opacity: 0, y: -50 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.4 }}
+>
+  {/* Main Content */}
+  <div className="p-8">
 
-        <form className='space-y-6' onSubmit={handleSumbit}>
-            <div className='flex justify-between'>
-                {code.map((digit, index) => (
-                    <input
-                        key={index}
-                        ref={(el) => { inputRef.current[index] = el; }}
-                        type="text"
-                        maxLength={6}
-                        value={digit}
-                        onChange={(e) => handleChange(index, e.target.value)}
-                        onKeyDown={(e) => handleKeyDown(index, e)}
-                        className="w-12 h-12 text-center text-2xl font-bold bg-gray-700 text-white border-2 border-gray-600 rounded-lg focus:border-cyan-400 focus:outline-none"
-                    />
-                ))}
-            </div>
-            {error && <p className='text-red-500 font-semibold mt-2'>{error}</p>}
-            
-        <motion.button className='mt-5 w-full py-3 px-4 bg-gradient-to-r from-blue-400 to-indigo-600 text-white font-bold rounded-lg shadow-lg hover:from-blue-600 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:right-offset-gray-900 transition duration-200 hover:cursor-pointer'
-                    whileHover={{scale: 1.02}}
-                    whileTap={{scale: 0.98}}
-                    type='submit'
-                    disabled={isLoading}
-                    >
+    <h2 className="mb-6 text-center text-3xl font-bold bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">
+      Verify Your Email
+    </h2>
 
-                        {isLoading ? <span><Loader className='w-6 h-6 animate-spin mx-auto'/></span> : <span>Verify</span>}
-                        
-        </motion.button>
-        </form>
-        
-    </motion.div>
+    <p className="mb-8 text-center text-sm font-medium leading-6 text-gray-300">
+      Enter the 6-digit code sent to your email address.{" "}
+      {user && (
+        <span className="font-semibold text-amber-300">
+          {user.email}
+        </span>
+      )}
+    </p>
+
+    <form className="space-y-6" onSubmit={handleSumbit}>
+
+      <div className="flex justify-center gap-3">
+        {code.map((digit, index) => (
+          <input
+            key={index}
+            ref={(el) => {
+              inputRef.current[index] = el;
+            }}
+            type="text"
+            inputMode="numeric"
+            maxLength={1}
+            value={digit}
+            onChange={(e) => handleChange(index, e.target.value)}
+            onKeyDown={(e) => handleKeyDown(index, e)}
+            className="h-12 w-12 rounded-lg border-2 border-slate-700 bg-slate-800 text-center text-xl font-bold text-white outline-none transition-all duration-200 focus:border-indigo-500 focus:bg-slate-700 focus:ring-2 focus:ring-indigo-500/20"
+          />
+        ))}
+      </div>
+
+      {error && (
+        <p className="text-center text-sm font-semibold text-red-400">
+          {error}
+        </p>
+      )}
+
+      <motion.button
+        type="submit"
+        disabled={isLoading}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        className="mt-5 flex w-full items-center justify-center rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 px-4 py-3 font-bold text-white shadow-lg shadow-indigo-900/30 transition-all duration-200 hover:from-blue-600 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:opacity-60"
+      >
+        {isLoading ? (
+          <Loader className="h-6 w-6 animate-spin" />
+        ) : (
+          "Verify"
+        )}
+      </motion.button>
+
+    </form>
+  </div>
+
+  {/* Back to Home */}
+  <div className="border-t border-white/10 bg-gradient-to-r from-slate-950/60 via-indigo-950/30 to-slate-950/60 px-6 py-5">
+    <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-between">
+
+      <p className="text-sm text-slate-400">
+        Want to return home?
+      </p>
+
+      <Link
+        to="/"
+        className="group inline-flex items-center gap-2 rounded-lg border border-blue-400/20 bg-blue-400/10 px-4 py-2 text-sm font-semibold text-blue-200 shadow-sm shadow-blue-950/30 transition duration-200 hover:border-blue-300/40 hover:bg-blue-400/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-400/60 focus:ring-offset-2 focus:ring-offset-slate-950"
+      >
+        <ArrowLeft className="h-4 w-4 transition-transform duration-200 group-hover:-translate-x-1" />
+        <span>Back to Home</span>
+      </Link>
+
+    </div>
+  </div>
+</motion.div>
+    
   )
 }
 
